@@ -1,0 +1,114 @@
+# This is the module to generate or choose random items from the list or any other.
+import random
+# concepts used: not in | for | while | randomization | Lists
+
+# These are the stages of hangman-stored in a list
+stages = [r'''
+  +---+
+  |   |
+  O   |
+ /|\  |
+ / \  |
+      |
+=========
+''', r'''
+  +---+
+  |   |
+  O   |
+ /|\  |
+ /    |
+      |
+=========
+''', r'''
+  +---+
+  |   |
+  O   |
+ /|\  |
+      |
+      |
+=========
+''', '''
+  +---+
+  |   |
+  O   |
+ /|   |
+      |
+      |
+=========''', '''
+  +---+
+  |   |
+  O   |
+  |   |
+      |
+      |
+=========
+''', '''
+  +---+
+  |   |
+  O   |
+      |
+      |
+      |
+=========
+''', '''
+  +---+
+  |   |
+      |
+      |
+      |
+      |
+=========
+''']
+# Declarations
+placeholder=""
+already_compared_list=[]
+lives=6
+game_over=False
+
+# list randomization
+
+word_list=["ball","cat","ballon","cherry"]
+chosen_word=random.choice(word_list)
+print(chosen_word)
+
+# assigning placeholders
+for num in chosen_word:
+    placeholder=placeholder+"-"
+print(placeholder)
+
+# looping through the chances
+while not game_over:
+    guess_letter=input("Enter a guess letter (lower case) : ").lower()
+
+    # with a placeholder -a--
+    display=""
+    #   l in ball
+    for letter in chosen_word:
+        # l==a ?? no
+        if letter==guess_letter:
+            display=display+letter
+            already_compared_list.append(letter)
+        #     b is in already_compared_list['a'] ???
+        elif letter in already_compared_list:
+            display=display+letter
+        else:
+            display=display+"-"
+
+    # this will not get printed until the for loop has iterated through all the letters
+    print(display)
+    
+    if guess_letter not in chosen_word:
+        lives-=1
+        print(f"you lose one life > Number of life set: {lives}/6")
+
+        if lives==0:
+            game_over=True
+            print("You lose")
+
+    if '-' not in display:
+        game_over=True
+        print("You won")
+
+    print(stages[lives])
+
+
